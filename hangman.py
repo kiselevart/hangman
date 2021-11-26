@@ -1,13 +1,13 @@
 import turtle as t
 import tkinter as tk
-from typing import Counter
 count = -1
 window = tk.Tk()
 entryvar = tk.StringVar(window)
 word = "word"
 guess = ""
-guesslist = ['',]
+guesslist = []
 listlength = 0
+guesscount = 0
 
 def submit():
         global guess
@@ -35,56 +35,38 @@ while True:
     submitbtn.pack()
     entermsg.pack()
 
-    window.update()
-    window.update_idletasks()
-
-    wronglabel = tk.Label(
+    wrong = tk.Label(
         text = "You are wrong",
-        width = 10,
-        height = 5,
     )
 
-    congrat = tk.Label(
-        text = "You win!",
-        width = 10,
-        height = 5,
+    correct = tk.Label(
+        text = "Correct",
     )
     
+    window.update_idletasks()
+    window.update()
     
     if listlength != len(guesslist):
-        if len(guesslist[count]) == len(word):
-            if guesslist[count] == word:
-                print("You win!")
-                congrat.pack() #DOESNT WORK WHY
+        count+=1
+        listlength +=1
+
+        if count != -1:
+            if len(guesslist[count-1]) == len(word):
+                if guesslist[count-1] == word:
+                    print("You win!")
+                    correct.pack() 
+
+                else:
+                    print("Wrong guess")
+                    guesscount += 1
+                    wrong.pack() 
+
+            elif guesslist[count-1] in word:
+                print("Your guess is correct")
+                correct.pack()
+                window.update_idletasks()
 
             else:
                 print("Wrong guess")
-                wronglabel.pack() #DOESNT WORK WHY
-
-        elif guesslist[count] in word:
-            print("Your guess is correct")
-
-        else:
-            print("Wrong")
-            wronglabel.pack()
-
-
-        count+=1
-        listlength +=1
-        
-        print(count)
-        print(guess)
-        print(guesslist)
-        
-    
-
-
-
-
-
-
-
-
-
-
-
+                guesscount += 1
+                wrong.pack()
